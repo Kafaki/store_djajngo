@@ -4,4 +4,4 @@
 *.ipr.idea
 
 
-static/vendor
+static/vendor/
