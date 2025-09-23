@@ -9,4 +9,6 @@ urlpatterns = [
 
     path('logout/', LogoutView.as_view(next_page='products:index'), name='logout'),
 
+    path('profile/', views.profile, name='profile'),
+
 ]

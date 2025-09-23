@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 
-from users.forms import UserLoginForm, UserRegistrationForm
+from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 
 
 # Create your views here.
@@ -32,3 +32,19 @@ def registration(request):
         form = UserRegistrationForm()
 
     return render(request, template_name='users/registration.html', context={"form": form})
+
+
+def profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(instance=request.user,
+                               data=request.POST,
+                               files=request.FILES
+                               )
+        if form.is_valid():
+            form.save()
+            return redirect("users:profile")
+    else:
+        form = UserProfileForm(instance=request.user)
+
+    return render(request, template_name='users/profile.html',
+                  context={'titile': 'Store - Профиль', "form": form})
