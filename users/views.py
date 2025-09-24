@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
+from django.contrib import messages
 
 
 # Create your views here.
@@ -13,7 +14,6 @@ def login_user(request):
             cd = form.cleaned_data
             user = authenticate(username=cd['username'], password=cd['password'])
             if user and user.is_active:
-                print('done')
                 login(request, user)
                 return redirect('products:index')
     else:
@@ -27,6 +27,7 @@ def registration(request):
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Аккаунт зарегистрирован ')
             return redirect("users:login")
     else:
         form = UserRegistrationForm()
@@ -48,3 +49,5 @@ def profile(request):
 
     return render(request, template_name='users/profile.html',
                   context={'titile': 'Store - Профиль', "form": form})
+
+
