@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 
+from products.models import Basket
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from django.contrib import messages
 
@@ -47,7 +48,11 @@ def profile(request):
     else:
         form = UserProfileForm(instance=request.user)
 
+    data = {
+        'titile': 'Store - Профиль',
+        "form": form,
+        'baskets': Basket.objects.filter(user=request.user),
+    }
+
     return render(request, template_name='users/profile.html',
-                  context={'titile': 'Store - Профиль', "form": form})
-
-
+                  context=data)
