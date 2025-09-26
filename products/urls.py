@@ -3,7 +3,7 @@ from . import views
 
 app_name = 'products'
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.IndexView.as_view(), name='index'),
     path('products/', views.products, name='products'),
     path('products/category/<int:category_id>', views.products, name='category'),
     path('products/page/<int:page_number>', views.products, name='paginator'),
