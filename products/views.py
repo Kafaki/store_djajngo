@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from .models import ProductCategory, Product, Basket
 
@@ -11,18 +11,22 @@ class IndexView(TemplateView):
     extra_context = {'title': 'Store'}
 
 
-def products(request, category_id=None, page_number=1):
-    prods = Product.objects.filter(category__id=category_id) if category_id else Product.objects.all()
-    per_page = 3
-    paginator = Paginator(prods, per_page)
-    prods_paginator = paginator.get_page(page_number)
 
-    context = {
-        'title': 'Store - Каталог',
-        'categories': ProductCategory.objects.all(),
-        'products': prods_paginator
-    }
-    return render(request, 'products/products.html', context=context)
+class ProductsListView(ListView):
+    model = Product
+    template_name = 'products/products.html'
+# def products(request, category_id=None, page_number=1):
+#     prods = Product.objects.filter(category__id=category_id) if category_id else Product.objects.all()
+#     per_page = 3
+#     paginator = Paginator(prods, per_page)
+#     prods_paginator = paginator.get_page(page_number)
+#
+#     context = {
+#         'title': 'Store - Каталог',
+#         'categories': ProductCategory.objects.all(),
+#         'products': prods_paginator
+#     }
+#     return render(request, 'products/products.html', context=context)
 
 
 @login_required
