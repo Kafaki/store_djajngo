@@ -1,6 +1,8 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
+from products.models import Basket
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from django.contrib import messages
 
@@ -34,7 +36,7 @@ def registration(request):
 
     return render(request, template_name='users/registration.html', context={"form": form})
 
-
+@login_required
 def profile(request):
     if request.method == 'POST':
         form = UserProfileForm(instance=request.user,
@@ -47,7 +49,11 @@ def profile(request):
     else:
         form = UserProfileForm(instance=request.user)
 
+    data = {
+        'titile': 'Store - Профиль',
+        "form": form,
+        'baskets': Basket.objects.filter(user=request.user),
+    }
+
     return render(request, template_name='users/profile.html',
-                  context={'titile': 'Store - Профиль', "form": form})
-
-
+                  context=data)
