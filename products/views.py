@@ -1,29 +1,33 @@
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
-from django.shortcuts import render, redirect
+
+from django.shortcuts import redirect
+from django.views.generic import TemplateView, ListView
+
 from .models import ProductCategory, Product, Basket
 
 
-# Create your views here.
-def index(request):
-    context = {
-        'title': 'Store',
-    }
-    return render(request, 'products/index.html', context=context)
+class IndexView(TemplateView):
+    template_name = 'products/index.html'
+    extra_context = {'title': 'Store', }
 
 
-def products(request, category_id=None, page_number=1):
-    prods = Product.objects.filter(category__id=category_id) if category_id else Product.objects.all()
-    per_page = 3
-    paginator = Paginator(prods, per_page)
-    prods_paginator = paginator.get_page(page_number)
+class ProductsView(ListView):
+    template_name = 'products/products.html'
+    context_object_name = 'products'
+    paginate_by = 3
 
-    context = {
-        'title': 'Store - Каталог',
-        'categories': ProductCategory.objects.all(),
-        'products': prods_paginator
-    }
-    return render(request, 'products/products.html', context=context)
+    def get_context_data(self, *, object_list=..., **kwargs):
+        context = super().get_context_data()
+        context['title'] = 'Store - Каталог'
+        context['categories'] = ProductCategory.objects.all()
+        return context
+
+    def get_queryset(self):
+        category_id = self.kwargs.get('category_id', None)
+
+        if category_id:
+            return Product.objects.filter(category__id=category_id)
+        return Product.objects.all()
 
 
 @login_required
