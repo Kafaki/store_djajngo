@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
@@ -30,10 +31,12 @@ class UserLoginView(LoginView):
 #     return render(request, template_name='users/login.html', context={'form': form})
 
 
-class UserRegistrationView(CreateView):
+class UserRegistrationView(SuccessMessageMixin,CreateView):
     form_class = UserRegistrationForm
     template_name = 'users/registration.html'
     success_url = reverse_lazy('users:login')
+    extra_context = {'title': 'Регистрация',}
+    success_message = 'Аккаунт зарегистрирован'
 
 
 # def registration(request):

@@ -3,12 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView
 
+from common.views import TitleMixin
 from .models import ProductCategory, Product, Basket
 
 
-class IndexView(TemplateView):
+class IndexView(TitleMixin, TemplateView):
     template_name = 'products/index.html'
-    extra_context = {'title': 'Store', }
+    title = 'Store'  # передаем аргумент через миксин TitleMixin
 
 
 class ProductsView(ListView):
