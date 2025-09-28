@@ -38,7 +38,7 @@ class BasketQuerySet(models.QuerySet):
 
 
 class Basket(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='bakets')
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='baskets')
     product = models.ForeignKey(to='Product', on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField(default=0)
     created_timestamp = models.DateTimeField(auto_now_add=True)
