@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 
+from products.models import Basket
 # from products.models import Basket
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 
@@ -63,8 +64,7 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Store - Профиль'
-        context['baskets'] = self.request.user.baskets.all()  # Использование related_name
-        # или context['baskets'] = Basket.objects.filter(user=self.request.user)
+        context['baskets'] = Basket.objects.filter(user=self.request.user)
         return context
 
 # @login_required
