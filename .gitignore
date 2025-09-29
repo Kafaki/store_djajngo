@@ -9,3 +9,7 @@
 
 
 static/vendor/
+/db.sqlite3
+/products/migrations/0001_initial.py
+/products/migrations/0002_initial.py
+/users/migrations/0001_initial.py
