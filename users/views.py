@@ -18,6 +18,8 @@ class UserLoginView(LoginView):
     template_name = 'users/login.html'
     redirect_authenticated_user = True
     next_page = reverse_lazy('products:index')
+
+
 # def login_user(request):
 #     if request.method == 'POST':
 #         form = UserLoginForm(data=request.POST)
@@ -33,11 +35,11 @@ class UserLoginView(LoginView):
 #     return render(request, template_name='users/login.html', context={'form': form})
 
 
-class UserRegistrationView(SuccessMessageMixin,CreateView):
+class UserRegistrationView(SuccessMessageMixin, CreateView):
     form_class = UserRegistrationForm
     template_name = 'users/registration.html'
     success_url = reverse_lazy('users:login')
-    extra_context = {'title': 'Регистрация',}
+    extra_context = {'title': 'Регистрация', }
     success_message = 'Аккаунт зарегистрирован'
 
 
@@ -58,15 +60,11 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
     template_name = 'users/profile.html'
     form_class = UserProfileForm
     success_url = reverse_lazy('users:profile')
+    extra_context = {'title': 'Store - Профиль', }
 
     def get_object(self, queryset=None):
         return self.request.user
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Store - Профиль'
-        context['baskets'] = Basket.objects.filter(user=self.request.user)
-        return context
 
 # @login_required
 # def profile(request):
@@ -104,5 +102,4 @@ class EmailVerificationView(TemplateView):
             user.save()
             return super().get(request, *args, **kwargs)
         else:
-            return  redirect('products:index')
-
+            return redirect('products:index')
