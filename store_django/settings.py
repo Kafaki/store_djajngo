@@ -142,6 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'products:index'
 
 # Sending emails
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
@@ -165,6 +166,9 @@ SOCIALACCOUNT_PROVIDERS = {
     'github': {
         'SCOPE': [
             'user',
+            'user:email',  # <- добавить
         ],
-    }
+    },
 }
+
+SOCIALACCOUNT_QUERY_EMAIL = True
