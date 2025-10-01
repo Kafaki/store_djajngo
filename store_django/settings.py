@@ -38,8 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
+
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -50,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'store_django.urls'
@@ -123,7 +131,6 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
@@ -137,14 +144,27 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = 'users:login'
 
 # Sending emails
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-EMAIL_HOST = "smtp.rambler.ru"
-EMAIL_PORT = 465
-EMAIL_HOST_USER = "django_project@rambler.ru"
-EMAIL_HOST_PASSWORD = "9d43Nnfj7n"
-EMAIL_USE_SSL = True
+# EMAIL_HOST = "smtp.rambler.ru"
+# EMAIL_PORT = 465
+# EMAIL_HOST_USER = "django_project@rambler.ru"
+# EMAIL_HOST_PASSWORD = "9d43Nnfj7n"
+# EMAIL_USE_SSL = True
+#
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# SERVER_EMAIL = EMAIL_HOST_USER
+# EMAIL_ADMIN = EMAIL_HOST_USER
 
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-SERVER_EMAIL = EMAIL_HOST_USER
-EMAIL_ADMIN = EMAIL_HOST_USER
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        'SCOPE': [
+            'user',
+        ],
+    }
+}
