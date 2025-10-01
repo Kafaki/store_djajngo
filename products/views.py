@@ -1,10 +1,10 @@
 from django.contrib.auth.decorators import login_required
-
 from django.shortcuts import redirect
-from django.views.generic import TemplateView, ListView
+from django.views.generic import ListView, TemplateView
 
 from common.views import TitleMixin
-from .models import ProductCategory, Product, Basket
+
+from .models import Basket, Product, ProductCategory
 
 
 class IndexView(TitleMixin, TemplateView):
