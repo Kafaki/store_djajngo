@@ -1,5 +1,7 @@
 from django.db import models
+
 from users.models import User
+
 
 class ProductCategory(models.Model):
     name = models.CharField(max_length=128, unique=True)
@@ -16,7 +18,7 @@ class ProductCategory(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField()
-    price = models.DecimalField(max_digits= 8, decimal_places=2)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
     quantity = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to='products_images')
     category = models.ForeignKey(to='ProductCategory', on_delete=models.PROTECT)
