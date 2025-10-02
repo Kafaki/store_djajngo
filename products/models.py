@@ -24,6 +24,7 @@ class Product(models.Model):
     category = models.ForeignKey(to='ProductCategory', on_delete=models.PROTECT)
 
     class Meta:
+        ordering = ['id']
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
 
