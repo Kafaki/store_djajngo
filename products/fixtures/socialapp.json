@@ -1,0 +1,1 @@
+[{"model": "socialaccount.socialapp", "pk": 1, "fields": {"provider": "github", "provider_id": "", "name": "GitHub", "client_id": "Ov23liMbpmcN4WxzPfrM", "secret": "97361ea5913449a4dedf7b98c56e4e4b3892bc93", "key": "", "settings": {}}}]
