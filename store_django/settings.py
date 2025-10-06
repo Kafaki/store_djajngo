@@ -154,17 +154,17 @@ LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'products:index'
 
 # Sending emails
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-# EMAIL_HOST = "smtp.rambler.ru"
-# EMAIL_PORT = 465
-# EMAIL_HOST_USER = "django_project@rambler.ru"
-# EMAIL_HOST_PASSWORD = "9d43Nnfj7n"
-# EMAIL_USE_SSL = True
-#
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-# SERVER_EMAIL = EMAIL_HOST_USER
-# EMAIL_ADMIN = EMAIL_HOST_USER
+EMAIL_HOST = "smtp.rambler.ru"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "django_project@rambler.ru"
+EMAIL_HOST_PASSWORD = "9d43Nnfj7n"
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -182,11 +182,14 @@ SOCIALACCOUNT_PROVIDERS = {
 
 SOCIALACCOUNT_QUERY_EMAIL = True
 
-
-#Caches
+# Caches
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
         'LOCATION': 'redis://127.0.0.1:6379',
     }
 }
+
+# Celery
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
