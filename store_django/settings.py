@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
 
+    "debug_toolbar",
+
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
 
@@ -58,6 +60,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     "allauth.account.middleware.AccountMiddleware",
+
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'store_django.urls'
@@ -79,6 +83,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'store_django.wsgi.application'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+    'localhost',
+]
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -172,3 +181,12 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 SOCIALACCOUNT_QUERY_EMAIL = True
+
+
+#Caches
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379',
+    }
+}
