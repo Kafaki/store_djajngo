@@ -7,6 +7,7 @@ from django.utils.timezone import now
 
 from store_django.settings import DOMAIN_NAME
 
+
 # Create your models here.
 
 class User(AbstractUser):
