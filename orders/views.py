@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, TemplateView
+from products.models import Basket
 
 from orders.forms import OrderForm
 
@@ -30,15 +31,12 @@ class OrderCreateView(CreateView):
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
+
+        baskets = Basket.objects.filter(user=request.user)
+
         checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                    # Provide the exact Price ID (for example, price_1234) of the product you want to sell
-                    'price': 'price_1SFVpPQhVZkj308BoHoECEmB',
-                    'quantity': 2,
-                },
-            ],
-            metadata = {'order_id': self.object.id},
+            line_items=baskets.stripe_products(),
+            metadata={'order_id': self.object.id},
             mode='payment',
             success_url='{}{}'.format(settings.DOMAIN_NAME, reverse('orders:order_success')),
             cancel_url='{}{}'.format(settings.DOMAIN_NAME, reverse('orders:order_canceled')),
@@ -86,4 +84,3 @@ def fulfill_order(session):
 
     order_id = int(session.metadata.order_id)
     print("WHats doing!!!")
-
