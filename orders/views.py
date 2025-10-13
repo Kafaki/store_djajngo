@@ -7,6 +7,8 @@ from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, TemplateView
+
+from orders.models import Order
 from products.models import Basket
 
 from orders.forms import OrderForm
@@ -83,4 +85,5 @@ def fulfill_order(session):
         return
 
     order_id = int(session.metadata.order_id)
-    print("WHats doing!!!")
+    order = Order.objects.get(id=order_id)
+    order.update_after_payment()
