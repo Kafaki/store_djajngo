@@ -1,8 +1,8 @@
 import stripe
+from django.conf import settings
 from django.db import models
 
 from users.models import User
-from django.conf import settings
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 

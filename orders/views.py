@@ -6,12 +6,11 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import CreateView, TemplateView, ListView, DetailView
-
-from orders.models import Order
-from products.models import Basket
+from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 from orders.forms import OrderForm
+from orders.models import Order
+from products.models import Basket
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
