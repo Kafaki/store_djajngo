@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import CreateView, TemplateView, ListView
+from django.views.generic import CreateView, TemplateView, ListView, DetailView
 
 from orders.models import Order
 from products.models import Basket
@@ -25,7 +25,6 @@ class CancelTemplateView(TemplateView):
     template_name = 'orders/success.html'
 
 
-
 class OrderListVieiw(ListView):
     template_name = 'orders/orders.html'
     extra_context = {'title': "Store - Заказы"}
@@ -34,6 +33,18 @@ class OrderListVieiw(ListView):
 
     def get_queryset(self):
         return Order.objects.filter(initiator=self.request.user)
+
+
+class OrderDetailView(DetailView):
+    template_name = 'orders/order.html'
+    model = Order
+    pk_url_kwarg = 'id'
+    context_object_name = 'order'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Store - Заказ № {self.object.id}'
+        return context
 
 
 class OrderCreateView(CreateView):
