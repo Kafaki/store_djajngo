@@ -16,31 +16,29 @@ import environ
 
 env = environ.Env(
     # set casting, default value
-    DEBUG=(bool,),
-    SECRET_KEY=(str,),
-    DOMAIN_NAME=(str,),
+    DEBUG=(bool, False),
+    SECRET_KEY=(str, ''),
+    DOMAIN_NAME=(str, 'localhost'),
 
-    REDIS_HOST=(str,),
-    REDIS_PORT=(str,),
+    REDIS_HOST=(str, ''),
+    REDIS_PORT=(str, ''),
 
-    DATABASE_NAME=(str,),
-    DATABASE_USER=(str,),
-    DATABASE_PASSWORD=(str,),
-    DATABASE_HOST=(str,),
-    DATABASE_PORT=(str,),
+    DATABASE_NAME=(str, ''),
+    DATABASE_USER=(str, ''),
+    DATABASE_PASSWORD=(str, ''),
+    DATABASE_HOST=(str, 'localhost'),
+    DATABASE_PORT=(int, 5432),
 
-    EMAIL_HOST=(str,),
-    EMAIL_PORT=(str,),
-    EMAIL_HOST_USER=(str,),
-    EMAIL_HOST_PASSWORD=(str,),
-    EMAIL_USE_SSL=(bool,),
+    EMAIL_HOST=(str, ''),
+    EMAIL_PORT=(str, '587'),
+    EMAIL_HOST_USER=(str, ''),
+    EMAIL_HOST_PASSWORD=(str, ''),
+    EMAIL_USE_SSL=(bool, False),
 
-    STRIPE_PUBLIC_KEY=(str,),
-    STRIPE_SECRET_KEY=(str,),
-    STRIPE_WEBHOOK_SECRET=(str,),
+    STRIPE_PUBLIC_KEY=(str, ''),
+    STRIPE_SECRET_KEY=(str, ''),
+    STRIPE_WEBHOOK_SECRET=(str, ''),
 )
-
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,6 +76,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
 
     "debug_toolbar",
+    'django_extensions',
 
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
