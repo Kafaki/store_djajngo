@@ -77,10 +77,12 @@ INSTALLED_APPS = [
 
     "debug_toolbar",
     'django_extensions',
+    'rest_framework',
 
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
     'orders.apps.OrdersConfig',
+    'api.apps.ApiConfig'
 
 ]
 
